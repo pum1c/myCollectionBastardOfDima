@@ -7,9 +7,9 @@
 
 import Foundation
 
-class JsonParser {
+class NetworkManager {
     
-    public func tryParse(completion: @escaping (UnsplashPhoto) -> Void) {
+    public func getPhotos(completion: @escaping (UnsplashPhoto) -> Void) {
             let URL = URL(string:  "https://api.unsplash.com/photos/random?client_id=9kKxmr_A7OcbNo-d-xn2ubsXgFSX2OZRsyO4XsHRqiw")
             var request = URLRequest(url: URL!)
             request.allHTTPHeaderFields = ["authToken": "nil"]

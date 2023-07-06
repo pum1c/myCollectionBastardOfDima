@@ -10,15 +10,15 @@ import Kingfisher
 
 class ProfileViewController: UIViewController {
 
-    let parse = JsonParser()
+    let parse = NetworkManager()
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.backgroundColor = .systemRed
-        collectionViewSetup()
+        setupCollectionView()
     }
     
-    func collectionViewSetup() {
+    func setupCollectionView() {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.itemSize = CGSize(width: 300, height: 100)
@@ -39,7 +39,7 @@ extension ProfileViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageCollectionViewCell", for: indexPath) as! ImageCollectionViewCell
         
-            parse.tryParse() { img in
+            parse.getPhotos() { img in
                 let url = URL(string: img.urls.regular)
                 cell.imageView.kf.setImage(with: url)
             }
