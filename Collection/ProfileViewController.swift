@@ -10,14 +10,15 @@ import Kingfisher
 
 class ProfileViewController: UIViewController {
 
+    let parse = JsonParser()
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         view.backgroundColor = .systemRed
-        collectionView()
+        collectionViewSetup()
     }
     
-    func collectionView() {
+    func collectionViewSetup() {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.itemSize = CGSize(width: 300, height: 100)
@@ -28,26 +29,24 @@ class ProfileViewController: UIViewController {
         collectionView.delegate = self
         view.addSubview(collectionView)
     }
-
-    
-
 }
+
 extension ProfileViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return 4
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageCollectionViewCell", for: indexPath) as! ImageCollectionViewCell
         
-            let imageUrl = URL(string: "https://source.unsplash.com/random")!
-            cell.imageView.kf.setImage(with: imageUrl)
-            
+            parse.tryParse() { img in
+                let url = URL(string: img.urls.regular)
+                cell.imageView.kf.setImage(with: url)
+            }
+        
             return cell
         }
-
     }
-
 
 extension ProfileViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
