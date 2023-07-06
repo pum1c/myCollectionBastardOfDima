@@ -14,14 +14,15 @@ class JsonParser {
             var request = URLRequest(url: URL!)
             request.allHTTPHeaderFields = ["authToken": "nil"]
             request.httpMethod = "GET"
-            let task  = URLSession.shared.dataTask(with: request) { data, response, error in
+            URLSession.shared.dataTask(with: request) { data, response, error in
                 guard let data = data else {return}
                 do {
                     let res = try JSONDecoder().decode(UnsplashPhoto.self, from: data)
-                    
+                    completion(res)
                 } catch {
                     print(error)
                 }
             }
+            .resume()
         }
     }

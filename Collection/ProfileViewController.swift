@@ -38,9 +38,12 @@ extension ProfileViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageCollectionViewCell", for: indexPath) as! ImageCollectionViewCell
-            parse.tryParse() {img in
-                print(img)
-        }
+        
+            parse.tryParse() { img in
+                let url = URL(string: img.urls.regular)
+                cell.imageView.kf.setImage(with: url)
+            }
+        
             return cell
         }
     }
